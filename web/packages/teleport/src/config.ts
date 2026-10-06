@@ -28,6 +28,7 @@ import {
 } from 'shared/services';
 
 import generateResourcePath from './generateResourcePath';
+import { DEFAULT_BRANDING } from './branding/config';
 
 import type { SortType } from 'teleport/services/agents';
 import type { RecordingType } from 'teleport/services/recordings';
@@ -56,6 +57,11 @@ const cfg = {
   isUsageBasedBilling: false,
   hideInaccessibleFeatures: false,
   customTheme: '',
+  /**
+   * White-label branding configuration for OSS deployments.
+   * Populated exclusively from the backend WebConfig.
+   */
+  branding: { ...DEFAULT_BRANDING },
   /**
    * isTeam is true if [Features.ProductType] == Team
    * @deprecated use other flags do determine cluster features istead of relying on isTeam
@@ -141,6 +147,7 @@ const cfg = {
     accountPassword: '/web/account/password',
     accountMfaDevices: '/web/account/twofactor',
     roles: '/web/roles',
+    accessLists: '/web/accesslists',
     deviceTrust: `/web/devices`,
     sso: '/web/sso',
     cluster: '/web/cluster/:clusterId/',
@@ -254,6 +261,9 @@ const cfg = {
       '/v1/webapi/roles?startKey=:startKey?&search=:search?&limit=:limit?',
     rolePath: '/v1/webapi/roles/:name?',
     presetRolesPath: '/v1/webapi/presetroles',
+    listAccessListsPath:
+      '/v1/webapi/accesslists?startKey=:startKey?&search=:search?&limit=:limit?',
+    accessListPath: '/v1/webapi/accesslists/:name?',
     githubConnectorsPath: '/v1/webapi/github/:name?',
     trustedClustersPath: '/v1/webapi/trustedcluster/:name?',
     connectMyComputerLoginsPath: '/v1/webapi/connectmycomputer/logins',
@@ -860,6 +870,18 @@ const cfg = {
     return generatePath(cfg.api.rolePath, { name });
   },
 
+  getListAccessListsUrl(params?: UrlListRolesParams) {
+    return generatePath(cfg.api.listAccessListsPath, {
+      search: params?.search || undefined,
+      startKey: params?.startKey || undefined,
+      limit: params?.limit || undefined,
+    });
+  },
+
+  getAccessListUrl(name?: string) {
+    return generatePath(cfg.api.accessListPath, { name });
+  },
+
   getDiscoveryConfigUrl(clusterId: string) {
     return generatePath(cfg.api.discoveryConfigPath, { clusterId });
   },
@@ -1177,6 +1199,9 @@ const cfg = {
 
   init(backendConfig = {}) {
     mergeDeep(this, backendConfig);
+    if (!this.branding) {
+      this.branding = { ...DEFAULT_BRANDING };
+    }
   },
 };
 

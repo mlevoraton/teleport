@@ -1,0 +1,26 @@
+kind: accesslist
+metadata:
+  # insert the name of your access list here:
+  name: new_access_list_name
+spec:
+  # A human-readable description of this access list
+  description: "Grant access to external users and systems"
+  # Owners of this access list
+  owners:
+    - name: "admin"
+  # Audit frequency for this access list (optional)
+  audit:
+    frequency: quarterly
+  # Access grants that define permissions
+  grants:
+    - kind: ssh
+      uri: "*"
+      logins: ["{{internal.logins}}"]
+      roles:
+        - editor
+    - kind: database
+      uri: "*"
+      db_user: "{{internal.db_user}}"
+      roles:
+        - readonly
+version: v1

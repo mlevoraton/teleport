@@ -129,6 +129,22 @@ class ResourceService {
   deleteGithubConnector(name: string) {
     return api.delete(cfg.getGithubConnectorsUrl(name));
   }
+
+  fetchAccessLists(params?: UrlListRolesParams) {
+    return api.get(cfg.getListAccessListsUrl(params));
+  }
+
+  createAccessList(content: string) {
+    return api.post(cfg.getAccessListUrl(), { content });
+  }
+
+  updateAccessList(name: string, content: string) {
+    return api.put(cfg.getAccessListUrl(name), { content });
+  }
+
+  deleteAccessList(name: string) {
+    return api.delete(cfg.getAccessListUrl(name));
+  }
 }
 
 export default ResourceService;

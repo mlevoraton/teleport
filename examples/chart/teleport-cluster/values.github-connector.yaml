@@ -1,0 +1,26 @@
+# Teleport Helm Chart — GitHub authentication (OSS)
+#
+# This values file selects an existing GitHub connector named "github". The
+# chart does not create dynamic GitHub connector resources and does not consume
+# arbitrary top-level `github` values.
+#
+# Create the connector separately with `tctl create -f <connector.yaml>` after
+# the cluster is running. Start from:
+#   web/packages/teleport/src/AuthConnectors/templates/github.yaml
+#
+# Never commit a real `client_secret`. Supply it only in the private manifest
+# passed to tctl and keep that file outside version control.
+
+# Public address used in the OAuth App callback:
+#   https://teleport.example.com/v1/webapi/github/callback
+publicAddr:
+  - teleport.example.com:443
+
+authentication:
+  # GitHub is supported by Teleport OSS.
+  type: github
+  # Must match metadata.name in the separately-created connector resource.
+  connectorName: github
+  # Keep local login available as a recovery path.
+  localAuth: true
+  secondFactor: 'on'

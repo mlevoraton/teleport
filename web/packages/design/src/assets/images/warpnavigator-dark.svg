@@ -1,0 +1,13 @@
+<svg width="420" height="96" viewBox="0 0 420 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="warpnavigator-dark-gradient" x1="16" y1="12" x2="80" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A78BFA" />
+      <stop offset="0.5" stop-color="#818CF8" />
+      <stop offset="1" stop-color="#22D3EE" />
+    </linearGradient>
+  </defs>
+  <circle cx="48" cy="48" r="38" stroke="url(#warpnavigator-dark-gradient)" stroke-width="8" />
+  <path d="M61.5 24L54.5 51.5L34.5 72L41.5 44.5L61.5 24Z" fill="url(#warpnavigator-dark-gradient)" />
+  <circle cx="48" cy="48" r="5" fill="#F8FAFC" />
+  <text x="104" y="62" fill="#F8FAFC" font-family="Ubuntu, Inter, sans-serif" font-size="40" font-weight="700" letter-spacing="-1">WarpNavigator</text>
+</svg>

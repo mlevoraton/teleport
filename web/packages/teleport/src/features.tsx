@@ -68,6 +68,7 @@ import { LockedAccessRequests } from './AccessRequests';
 import { Integrations } from './Integrations';
 import { Bots } from './Bots';
 import { AddBots } from './Bots/Add';
+import { AccessListsContainer } from './AccessLists';
 
 import type { FeatureFlags, TeleportFeature } from './types';
 
@@ -276,6 +277,31 @@ export class FeatureRoles implements TeleportFeature {
     exact: true,
     getLink() {
       return cfg.routes.roles;
+    },
+  };
+}
+
+export class FeatureAccessLists implements TeleportFeature {
+  category = NavigationCategory.Management;
+  section = ManagementSection.Permissions;
+
+  route = {
+    title: 'Manage Access Lists',
+    path: cfg.routes.accessLists,
+    exact: true,
+    component: AccessListsContainer,
+  };
+
+  hasAccess(flags: FeatureFlags) {
+    return true;
+  }
+
+  navigationItem = {
+    title: NavTitle.AccessLists,
+    icon: ListAddCheck,
+    exact: true,
+    getLink() {
+      return cfg.routes.accessLists;
     },
   };
 }
@@ -627,6 +653,7 @@ export function getOSSFeatures(): TeleportFeature[] {
 
     // - Permissions
     new FeatureRoles(),
+    new FeatureAccessLists(),
 
     // - Identity
     new FeatureLocks(),
